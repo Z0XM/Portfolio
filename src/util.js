@@ -37,7 +37,7 @@ var createProgram = function (vertexShaderID, fragmentShaderID) {
 var createBuffer = function (type, vertices, draw_mode) {
     let bufferID = gl.createBuffer();
     gl.bindBuffer(type, bufferID);
-    gl.bufferData(type, new Float32Array(vertices), draw_mode);
+    gl.bufferData(type, vertices, draw_mode);
 
     return bufferID;
 };

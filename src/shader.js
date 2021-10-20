@@ -6,15 +6,15 @@ attribute vec2 vertPosition;
 attribute vec3 vertColor;
 
 varying vec3 fragColor;
+varying vec2 fragPos;
 
-uniform mat3 matWorld;
+uniform mat4 matWorld;
 
 void main()
 {
-    gl_Position.w=1.;
-
+    fragPos=vertPosition;
     fragColor=vertColor;
-    gl_Position.xyw=matWorld * vec3(vertPosition, 1.0);
+    gl_Position=matWorld * vec4(vertPosition, 0.0, 1.0);
 }
 
 
@@ -25,10 +25,12 @@ var fragmentShaderStr = `
 precision mediump float;
 
 varying vec3 fragColor;
+varying vec2 fragPos;
 
 void main()
 {
-    gl_FragColor=vec4(fragColor,1.);
+    gl_FragColor.rgb += fragColor * (1.5-length(fragPos));
+    gl_FragColor.a = 1.0;
 }
 
 `;

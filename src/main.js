@@ -16,12 +16,20 @@ function setup() {
     if (program == -1) return;
 
     var vertices = [
-        1.0, 1.0, 1.0, 0.0, 0.0,
-        -1.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, -1.0, 1.0, 0.0, 0.0
-    ]
+        -2.0, 2.0, 1.0, 0.0, 0.0,
+        2.0, 2.0, 1.0, 0.0, 0.0,
+        2.0, -2.0, 1.0, 0.0, 0.0,
+        -2.0, -2.0, 1.0, 0.0, 0.0
+    ];
 
-    var vbo = createBuffer(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    var indices = [
+        3, 2, 1, 0
+    ];
+
+
+    var vbo = createBuffer(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    var ibo = createBuffer(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+
 
     var positionAttrib = gl.getAttribLocation(program, 'vertPosition');
     var colorAttrib = gl.getAttribLocation(program, 'vertColor');
@@ -34,21 +42,30 @@ function setup() {
 
     gl.useProgram(program);
 
+
     var u_matWorld = gl.getUniformLocation(program, 'matWorld');
 
-    var matWorld = new Float32Array(9);
-    glMatrix.mat3.identity(matWorld);
+    var matWorld = new Float32Array(16);
+    glMatrix.mat4.identity(matWorld);
 
-    gl.uniformMatrix3fv(u_matWorld, gl.FALSE, matWorld);
+    var matIdentity = new Float32Array(16);
+    glMatrix.mat4.identity(matIdentity);
 
+    var matScaled = new Float32Array(16);
+    var matRotated = new Float32Array(16);
+    var matTranslated = new Float32Array(16);
 
+    glMatrix.mat4.scale(matScaled, matIdentity, [1.0, 1.0, 0.0]);
+    glMatrix.mat4.rotate(matRotated, matScaled, 0.0, [0.0, 0.0, 1.0]);
+    glMatrix.mat4.translate(matWorld, matRotated, [0.0, 0.0, 0.0]);
+
+    gl.uniformMatrix4fv(u_matWorld, gl.FALSE, matWorld);
 
     var loop = function () {
-
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        gl.drawElements(gl.TRIANGLE_FAN, indices.length, gl.UNSIGNED_SHORT, 0);
         requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
