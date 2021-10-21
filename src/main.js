@@ -61,7 +61,14 @@ function setup() {
 
     gl.uniformMatrix4fv(u_matWorld, gl.FALSE, matWorld);
 
+
+    var u_time = gl.getUniformLocation(program, 'time');
+    var time = 0.0;
+
     var loop = function () {
+        time = performance.now() / 1000;
+        gl.uniform1f(u_time, time);
+
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
