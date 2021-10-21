@@ -9,3 +9,14 @@ body{
     position: absolute;    
     /* background-color:darkslategray; */
 }
+
+.name{
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+    text-align: center;
+    background-color:transparent;
+    margin: auto;
+    border: 0;
+    padding:0;
+}

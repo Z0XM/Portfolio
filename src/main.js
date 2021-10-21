@@ -16,10 +16,10 @@ function setup() {
     if (program == -1) return;
 
     var vertices = [
-        -2.0, 2.0, 1.0, 0.0, 0.0,
-        2.0, 2.0, 1.0, 0.0, 0.0,
-        2.0, -2.0, 1.0, 0.0, 0.0,
-        -2.0, -2.0, 1.0, 0.0, 0.0
+        -1.0, 1.0,
+        1.0, 1.0,
+        1.0, -1.0,
+        -1.0, -1.0
     ];
 
     var indices = [
@@ -32,13 +32,13 @@ function setup() {
 
 
     var positionAttrib = gl.getAttribLocation(program, 'vertPosition');
-    var colorAttrib = gl.getAttribLocation(program, 'vertColor');
+    //var colorAttrib = gl.getAttribLocation(program, 'vertColor');
 
-    gl.vertexAttribPointer(positionAttrib, 2, gl.FLOAT, gl.FALSE, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
-    gl.vertexAttribPointer(colorAttrib, 3, gl.FLOAT, gl.FALSE, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
+    gl.vertexAttribPointer(positionAttrib, 2, gl.FLOAT, gl.FALSE, 2 * Float32Array.BYTES_PER_ELEMENT, 0);
+    //gl.vertexAttribPointer(colorAttrib, 3, gl.FLOAT, gl.FALSE, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
 
     gl.enableVertexAttribArray(positionAttrib);
-    gl.enableVertexAttribArray(colorAttrib);
+    //gl.enableVertexAttribArray(colorAttrib);
 
     gl.useProgram(program);
 
@@ -55,19 +55,18 @@ function setup() {
     var matRotated = new Float32Array(16);
     var matTranslated = new Float32Array(16);
 
-    glMatrix.mat4.scale(matScaled, matIdentity, [1.0, 1.0, 0.0]);
-    glMatrix.mat4.rotate(matRotated, matScaled, 0.0, [0.0, 0.0, 1.0]);
-    glMatrix.mat4.translate(matWorld, matRotated, [0.0, 0.0, 0.0]);
-
-    gl.uniformMatrix4fv(u_matWorld, gl.FALSE, matWorld);
-
-
     var u_time = gl.getUniformLocation(program, 'time');
     var time = 0.0;
 
     var loop = function () {
         time = performance.now() / 1000;
         gl.uniform1f(u_time, time);
+
+        glMatrix.mat4.scale(matScaled, matIdentity, [1.0, 1.0, 0.0]);
+        glMatrix.mat4.rotate(matRotated, matScaled, 0.0, [0.0, 0.0, 1.0]);
+        glMatrix.mat4.translate(matWorld, matRotated, [0.0, 0.0, 0.0]);
+
+        gl.uniformMatrix4fv(u_matWorld, gl.FALSE, matWorld);
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
