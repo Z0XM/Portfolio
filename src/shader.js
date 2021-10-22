@@ -41,12 +41,10 @@ void main()
 
     if(mixValue > 0.93){
         color += vec3(0.5,0.0,1.0);
-        //color = vec3(0.0, 0.0, 0.0);
-        mixValue;
     }
 
     if(mixValue < 0.9){
-        mixValue = 1.0;
+        mixValue = 0.0;
         color = vec3(0.0, 0.0, 0.0);
     }
 

@@ -1,7 +1,6 @@
 var canvas = document.getElementById('canvas');
 var gl = canvas.getContext('webgl2');
 
-
 function setup() {
     gl.canvas.width = window.innerWidth;
     gl.canvas.height = window.innerHeight;
