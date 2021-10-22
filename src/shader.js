@@ -34,14 +34,23 @@ void main()
     float mixValue = distance(pixelPos*abs(cos((time + pixelPos.x)/2.0)/6.0),vec2(0.0,1.0));
     vec3 color = mix(color1,color2,mixValue);
 
-    if(color[2] < 0.0){
+    if(mixValue > 1.0){
         mixValue = distance(pixelPos*abs(cos((time+pixelPos.x)/2.0)/6.0),vec2(0.0,-1.0));
         color = mix(color1,color2,mixValue);
     }
 
+    if(mixValue > 0.93){
+        color += vec3(0.5,0.0,1.0);
+        //color = vec3(0.0, 0.0, 0.0);
+        mixValue;
+    }
+
+    if(mixValue < 0.9){
+        mixValue = 1.0;
+        color = vec3(0.0, 0.0, 0.0);
+    }
+
     gl_FragColor = vec4(color,mixValue);
-    
-    //gl_FragColor = vec4(pixelPos*0.5 + 0.5, 0.0, 1.0);
 }
 
 `;

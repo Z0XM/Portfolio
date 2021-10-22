@@ -17,9 +17,11 @@ html,body{
 .name{
     overflow: hidden ;
     background-color:transparent;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 40px;
+    color:white;
+    /* font-family: 'Courier New', Courier, monospace; */
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 60px;
+    font-weight: bold;
 
     position:fixed;
 
@@ -28,4 +30,5 @@ html,body{
     height: 100%;
     align-items: center;
     justify-content: center;
+    z-index:1;
 }
