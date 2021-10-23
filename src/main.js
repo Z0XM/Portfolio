@@ -12,38 +12,26 @@ function setup() {
     var fragmentShader = createShader(gl.FRAGMENT_SHADER, fragmentShaderStr);
     if (fragmentShader == -1) return;
 
-    var program = createProgram(vertexShader, fragmentShader);
-    if (program == -1) return;
+    var programBackAnimation = createProgram(vertexShader, fragmentShader);
+    if (programBackAnimation == -1) return;
 
-    var vertices = [
+    var verticesBackAnimation = [
         -1.0, 1.0,
         1.0, 1.0,
         1.0, -1.0,
         -1.0, -1.0
     ];
 
-    var indices = [
+    var indicesBackAnimation = [
         3, 2, 1, 0
     ];
 
+    var vboBackAnimation = createBuffer(gl.ARRAY_BUFFER, new Float32Array(verticesBackAnimation), gl.STATIC_DRAW);
+    var iboBackAnimation = createBuffer(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indicesBackAnimation), gl.STATIC_DRAW);
 
-    var vbo = createBuffer(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-    var ibo = createBuffer(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+    var positionAttrib = gl.getAttribLocation(programBackAnimation, 'vertPosition');
 
-
-    var positionAttrib = gl.getAttribLocation(program, 'vertPosition');
-    //var colorAttrib = gl.getAttribLocation(program, 'vertColor');
-
-    gl.vertexAttribPointer(positionAttrib, 2, gl.FLOAT, gl.FALSE, 2 * Float32Array.BYTES_PER_ELEMENT, 0);
-    //gl.vertexAttribPointer(colorAttrib, 3, gl.FLOAT, gl.FALSE, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
-
-    gl.enableVertexAttribArray(positionAttrib);
-    //gl.enableVertexAttribArray(colorAttrib);
-
-    gl.useProgram(program);
-
-
-    var u_matWorld = gl.getUniformLocation(program, 'matWorld');
+    var u_matWorld = gl.getUniformLocation(programBackAnimation, 'matWorld');
 
     var matWorld = new Float32Array(16);
     glMatrix.mat4.identity(matWorld);
@@ -55,17 +43,17 @@ function setup() {
     var matRotated = new Float32Array(16);
     var matTranslated = new Float32Array(16);
 
-    var u_animationValueTop = gl.getUniformLocation(program, 'animationValueTop');
+    var u_animationValueTop = gl.getUniformLocation(programBackAnimation, 'animationValueTop');
     var animationValueTop = Math.PI;
     var animationCounterTop = 0.0;
     var animationOpenTop = false;
 
-    var u_animationValueBottom = gl.getUniformLocation(program, 'animationValueBottom');
+    var u_animationValueBottom = gl.getUniformLocation(programBackAnimation, 'animationValueBottom');
     var animationValueBottom = Math.PI;
     var animationCounterBottom = 0.0;
     var animationOpenBottom = false;
 
-    document.getElementById('social').addEventListener('click', function () {
+    document.getElementById('skills').addEventListener('click', function () {
         if (animationValueTop == Math.PI || animationValueTop == 0.0) {
             animationCounterTop = 0.0;
             animationOpenTop = !animationOpenTop;
@@ -82,10 +70,27 @@ function setup() {
     var time = 0.0;
     var lastTime = 0.0;
     var dt = 0.0;
+    /*
+    usePorgram
+    bindBuffer
+    vertexAttribPointer
+    enableVertexAttribArray
+    gl.uniform
+    gl.draw
+
+    */
     var loop = function () {
         time = performance.now() / 1000;
         dt = time - lastTime;
         lastTime = time;
+
+        gl.useProgram(programBackAnimation);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vboBackAnimation);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iboBackAnimation);
+        gl.vertexAttribPointer(positionAttrib, 2, gl.FLOAT, gl.FALSE, 2 * Float32Array.BYTES_PER_ELEMENT, 0);
+        gl.enableVertexAttribArray(positionAttrib);
+        gl.enable(gl.DEPTH_TEST);
+
 
         animationCounterTop += dt;
         animationCounterBottom += dt;
@@ -113,7 +118,11 @@ function setup() {
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        gl.drawElements(gl.TRIANGLE_FAN, indices.length, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.TRIANGLE_FAN, indicesBackAnimation.length, gl.UNSIGNED_SHORT, 0);
+
+
+
+
         requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
