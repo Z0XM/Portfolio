@@ -55,14 +55,56 @@ function setup() {
     var matRotated = new Float32Array(16);
     var matTranslated = new Float32Array(16);
 
-    var u_time = gl.getUniformLocation(program, 'time');
-    var time = 0.0;
+    var u_animationValueTop = gl.getUniformLocation(program, 'animationValueTop');
+    var animationValueTop = Math.PI;
+    var animationCounterTop = 0.0;
+    var animationOpenTop = false;
 
+    var u_animationValueBottom = gl.getUniformLocation(program, 'animationValueBottom');
+    var animationValueBottom = Math.PI;
+    var animationCounterBottom = 0.0;
+    var animationOpenBottom = false;
+
+    document.getElementById('social').addEventListener('click', function () {
+        if (animationValueTop == Math.PI || animationValueTop == 0.0) {
+            animationCounterTop = 0.0;
+            animationOpenTop = !animationOpenTop;
+        }
+    });
+
+    document.getElementById('projects').addEventListener('click', function () {
+        if (animationValueBottom == Math.PI || animationValueBottom == 0.0) {
+            animationCounterBottom = 0.0;
+            animationOpenBottom = !animationOpenBottom;
+        }
+    });
+
+    var time = 0.0;
+    var lastTime = 0.0;
+    var dt = 0.0;
     var loop = function () {
         time = performance.now() / 1000;
-        gl.uniform1f(u_time, time);
+        dt = time - lastTime;
+        lastTime = time;
 
-        glMatrix.mat4.scale(matScaled, matIdentity, [1.0, 1.0, 0.0]);
+        animationCounterTop += dt;
+        animationCounterBottom += dt;
+
+        if (animationCounterTop < Math.PI) animationValueTop += dt;
+        else {
+            if (animationOpenTop) animationValueTop = Math.PI;
+            else animationValueTop = 0.0;
+        }
+        if (animationCounterBottom < Math.PI) animationValueBottom += dt;
+        else {
+            if (animationOpenBottom) animationValueBottom = Math.PI;
+            else animationValueBottom = 0.0;
+        }
+
+        gl.uniform1f(u_animationValueTop, animationValueTop);
+        gl.uniform1f(u_animationValueBottom, animationValueBottom);
+
+        glMatrix.mat4.scale(matScaled, matIdentity, [1.1, 1.1, 0.0]);
         glMatrix.mat4.rotate(matRotated, matScaled, 0.0, [0.0, 0.0, 1.0]);
         glMatrix.mat4.translate(matWorld, matRotated, [0.0, 0.0, 0.0]);
 
