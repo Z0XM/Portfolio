@@ -6,32 +6,30 @@ function setup() {
     gl.canvas.height = window.innerHeight;
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
 
-    var vertexShader = createShader(gl.VERTEX_SHADER, vertexShaderStr);
-    if (vertexShader == -1) return;
+    var VSBack = createShader(gl.VERTEX_SHADER, VSBackStr);
+    if (VSBack == -1) return;
+    var FSBack = createShader(gl.FRAGMENT_SHADER, FSBackStr);
+    if (FSBack == -1) return;
+    var programBack = createProgram(VSBack, FSBack);
+    if (programBack == -1) return;
 
-    var fragmentShader = createShader(gl.FRAGMENT_SHADER, fragmentShaderStr);
-    if (fragmentShader == -1) return;
-
-    var programBackAnimation = createProgram(vertexShader, fragmentShader);
-    if (programBackAnimation == -1) return;
-
-    var verticesBackAnimation = [
+    var verticesBack = [
         -1.0, 1.0,
         1.0, 1.0,
         1.0, -1.0,
         -1.0, -1.0
     ];
 
-    var indicesBackAnimation = [
+    var indicesBack = [
         3, 2, 1, 0
     ];
 
-    var vboBackAnimation = createBuffer(gl.ARRAY_BUFFER, new Float32Array(verticesBackAnimation), gl.STATIC_DRAW);
-    var iboBackAnimation = createBuffer(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indicesBackAnimation), gl.STATIC_DRAW);
+    var vboBack = createBuffer(gl.ARRAY_BUFFER, new Float32Array(verticesBack), gl.STATIC_DRAW);
+    var iboBack = createBuffer(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indicesBack), gl.STATIC_DRAW);
 
-    var positionAttrib = gl.getAttribLocation(programBackAnimation, 'vertPosition');
+    var positionAttribBack = gl.getAttribLocation(programBack, 'vertPosition');
 
-    var u_matWorld = gl.getUniformLocation(programBackAnimation, 'matWorld');
+    var u_matWorld = gl.getUniformLocation(programBack, 'matWorld');
 
     var matWorld = new Float32Array(16);
     glMatrix.mat4.identity(matWorld);
@@ -43,30 +41,50 @@ function setup() {
     var matRotated = new Float32Array(16);
     var matTranslated = new Float32Array(16);
 
-    var u_animationValueTop = gl.getUniformLocation(programBackAnimation, 'animationValueTop');
-    var animationValueTop = Math.PI;
+
+    var u_mainColor = gl.getUniformLocation(programBack, 'mainColor');
+    var mainColor = [2.0, 0.0, 4.0];
+    var colorList = [
+        //[1.0, 0.0, 0.0],
+        //[0.0, 1.0, 0.0],
+        //[0.0, 0.0, 1.0],
+        [2.0, 0.0, 4.0],
+    ];
+
+    var u_timeFactor = gl.getUniformLocation(programBack, 'timeFactor');
+
+    var timeLimit = Math.PI;
+    var timeFactor = 0.5;
+
+    var u_animationValueTop = gl.getUniformLocation(programBack, 'animationValueTop');
+    var animationValueTop = timeLimit * timeFactor;
     var animationCounterTop = 0.0;
     var animationOpenTop = false;
 
-    var u_animationValueBottom = gl.getUniformLocation(programBackAnimation, 'animationValueBottom');
-    var animationValueBottom = Math.PI;
+    var u_animationValueBottom = gl.getUniformLocation(programBack, 'animationValueBottom');
+    var animationValueBottom = timeLimit * timeFactor;
     var animationCounterBottom = 0.0;
     var animationOpenBottom = false;
 
     document.getElementById('skills').addEventListener('click', function () {
-        if (animationValueTop == Math.PI || animationValueTop == 0.0) {
+        if (animationValueTop == timeLimit * timeFactor || animationValueTop == 0.0) {
             animationCounterTop = 0.0;
             animationOpenTop = !animationOpenTop;
+
+            mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
         }
     });
 
     document.getElementById('projects').addEventListener('click', function () {
-        if (animationValueBottom == Math.PI || animationValueBottom == 0.0) {
+        if (animationValueBottom == timeLimit * timeFactor || animationValueBottom == 0.0) {
             animationCounterBottom = 0.0;
             animationOpenBottom = !animationOpenBottom;
+
+            mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
         }
     });
 
+    var u_time = gl.getUniformLocation(programBack, 'time');
     var time = 0.0;
     var lastTime = 0.0;
     var dt = 0.0;
@@ -79,33 +97,44 @@ function setup() {
     gl.draw
 
     */
+    gl.enable(gl.DEPTH_TEST);
+
     var loop = function () {
         time = performance.now() / 1000;
         dt = time - lastTime;
         lastTime = time;
 
-        gl.useProgram(programBackAnimation);
-        gl.bindBuffer(gl.ARRAY_BUFFER, vboBackAnimation);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iboBackAnimation);
-        gl.vertexAttribPointer(positionAttrib, 2, gl.FLOAT, gl.FALSE, 2 * Float32Array.BYTES_PER_ELEMENT, 0);
-        gl.enableVertexAttribArray(positionAttrib);
-        gl.enable(gl.DEPTH_TEST);
+        gl.clearColor(0.0, 0.0, 0.0, 0.0);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        gl.useProgram(programBack);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vboBack);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iboBack);
+        gl.vertexAttribPointer(positionAttribBack, 2, gl.FLOAT, gl.FALSE, 2 * Float32Array.BYTES_PER_ELEMENT, 0);
+        gl.enableVertexAttribArray(positionAttribBack);
 
 
         animationCounterTop += dt;
         animationCounterBottom += dt;
 
-        if (animationCounterTop < Math.PI) animationValueTop += dt;
+        if (animationCounterTop < timeLimit * timeFactor) animationValueTop += dt;
         else {
-            if (animationOpenTop) animationValueTop = Math.PI;
+            if (animationOpenTop) animationValueTop = timeLimit * timeFactor;
             else animationValueTop = 0.0;
         }
-        if (animationCounterBottom < Math.PI) animationValueBottom += dt;
+        if (animationCounterBottom < timeLimit * timeFactor) animationValueBottom += dt;
         else {
-            if (animationOpenBottom) animationValueBottom = Math.PI;
+            if (animationOpenBottom) animationValueBottom = timeLimit * timeFactor;
             else animationValueBottom = 0.0;
         }
 
+
+        gl.uniform3fv(u_mainColor, mainColor);
+        gl.uniform1f(u_timeFactor, timeFactor);
+        gl.uniform1f(u_time, time);
         gl.uniform1f(u_animationValueTop, animationValueTop);
         gl.uniform1f(u_animationValueBottom, animationValueBottom);
 
@@ -115,13 +144,7 @@ function setup() {
 
         gl.uniformMatrix4fv(u_matWorld, gl.FALSE, matWorld);
 
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-        gl.drawElements(gl.TRIANGLE_FAN, indicesBackAnimation.length, gl.UNSIGNED_SHORT, 0);
-
-
-
+        gl.drawElements(gl.TRIANGLE_FAN, indicesBack.length, gl.UNSIGNED_SHORT, 0);
 
         requestAnimationFrame(loop);
     };
