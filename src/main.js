@@ -67,18 +67,18 @@ function setup() {
     var animationOpenBottom = false;
 
     document.getElementById('skills').addEventListener('click', function () {
-        if (animationValueTop == timeLimit * timeFactor || animationValueTop == 0.0) {
-            animationCounterTop = 0.0;
-            animationOpenTop = !animationOpenTop;
+        if (animationValueBottom == timeLimit * timeFactor || animationValueBottom == 0.0) {
+            animationCounterBottom = 0.0;
+            animationOpenBottom = !animationOpenBottom;
 
             mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
         }
     });
 
     document.getElementById('projects').addEventListener('click', function () {
-        if (animationValueBottom == timeLimit * timeFactor || animationValueBottom == 0.0) {
-            animationCounterBottom = 0.0;
-            animationOpenBottom = !animationOpenBottom;
+        if (animationValueTop == timeLimit * timeFactor || animationValueTop == 0.0) {
+            animationCounterTop = 0.0;
+            animationOpenTop = !animationOpenTop;
 
             mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
         }
@@ -122,8 +122,12 @@ function setup() {
 
         if (animationCounterTop < timeLimit * timeFactor) animationValueTop += dt;
         else {
-            if (animationOpenTop) animationValueTop = timeLimit * timeFactor;
-            else animationValueTop = 0.0;
+            if (animationOpenTop) {
+                animationValueTop = timeLimit * timeFactor;
+            }
+            else {
+                animationValueTop = 0.0;
+            }
         }
         if (animationCounterBottom < timeLimit * timeFactor) animationValueBottom += dt;
         else {
