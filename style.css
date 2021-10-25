@@ -100,7 +100,7 @@ html,body{
     background-color:transparent;
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     font-size:40px;
-    color:white;
+    color:rgba(255, 255, 255, 0.8);
     position:relative;
 
     display: flex;
@@ -108,10 +108,11 @@ html,body{
 
     height:50%;
     border-radius: 20%;
-    border-color: #4285F4;
+    border-color:rgba(255, 255, 255, 0.5);
+    border-width: 4px;
 }
 .buttons:hover{
-    color:rgb(235, 216, 255);
+    color:white;
     background-color:blueviolet;
     cursor: pointer;
 }

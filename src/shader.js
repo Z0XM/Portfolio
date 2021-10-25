@@ -72,13 +72,16 @@ void main()
      y_length = pos.y * abs(sin(animationValueBottom));
     if(abs(y_length) >= 0.120 && abs(y_length) <= 0.125){
         if(abs(pixelPos.x) <= 0.2){
-            gl_FragColor.rgb = vec3(1.0, 1.0, 1.0);
+            gl_FragColor.rgb = vec3(0.0, 0.0, 0.0);
         }
-        // if(abs(sin(abs(pixelPos.x) - time*2.0)) >= 0.999 && abs(sin(abs(pixelPos.x) - time*2.0)) <= 1.0)
-        // {
-        //     gl_FragColor.rgb = vec3(1.0);
-        // }
+        if(abs(sin(abs(pixelPos.x) - time*2.0)) >= 0.999 && abs(sin(abs(pixelPos.x) - time*2.0)) <= 1.0)
+        {
+            gl_FragColor.rgb = vec3(1.0);
+        }
     }
+
+    float mindeg = time - PI/16.0;
+    float maxdeg = time + PI/16.0;
 
     float deg = animationValueTop;
     if(deg > PI*timeFactor) deg = 2.0*PI*timeFactor - deg;
@@ -86,11 +89,19 @@ void main()
     pos = pixelPos - vec2(0.0, 0.1835);
     float a = 0.226, b = 0.10, c = 0.222, d=0.097;
     if(pos.x*pos.x*a*a + pos.y*pos.y*b*b <= a*a*b*b 
-    && pos.x*pos.x*c*c + pos.y*pos.y*d*d >= c*c*d*d
-    && acos(pixelPos.x / length(pixelPos)) <= 2.0*(deg) 
-    ){
-        gl_FragColor.rgb += vec3(0.5, 1.0, 0.0);
+    && pos.x*pos.x*c*c + pos.y*pos.y*d*d >= c*c*d*d)
+    {
+        if(acos(pixelPos.x / length(pixelPos)) <= 2.0*(deg)){
+            gl_FragColor.rgb = vec3(0.0, 0.0, 0.0);
+        }
+
+        float xmin = b * cos(mindeg);
+        float xmax = b * cos(maxdeg);
+        if(pixelPos.x >= xmin && pixelPos.x <= xmax || pixelPos.x <= xmin && pixelPos.x >= xmax){
+            gl_FragColor.rgb = vec3(1.0);
+        }
     }
+
 
     if(animationValueTop == 0.0 && animationValueBottom == 0.0 && (abs(pixelPos.x) > 0.87 || abs(pixelPos.y) > 0.84)){
         gl_FragColor.rgb += vec3(0.7 * abs(sin(time + pixelPos.x + pixelPos.y)));
@@ -102,7 +113,6 @@ void main()
     else if(animationValueTop == 0.0 && animationValueBottom == 0.0 && (abs(pixelPos.x) > 0.86 || abs(pixelPos.y) > 0.82)){
          gl_FragColor.rgb = vec3(0.0);
     }
-    
 }
 
 `;
