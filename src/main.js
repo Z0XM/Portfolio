@@ -71,7 +71,10 @@ function setup() {
             animationCounterBottom = 0.0;
             animationOpenBottom = !animationOpenBottom;
 
-            mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
+            //mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
+
+            if (!animationOpenBottom)
+                document.querySelector('.skillspace').style.setProperty('z-index', 2);
         }
     });
 
@@ -80,9 +83,10 @@ function setup() {
             animationCounterTop = 0.0;
             animationOpenTop = !animationOpenTop;
 
-            mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
+            //mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
         }
     });
+
 
     var u_time = gl.getUniformLocation(programBack, 'time');
     var time = 0.0;
@@ -124,15 +128,21 @@ function setup() {
         else {
             if (animationOpenTop) {
                 animationValueTop = timeLimit * timeFactor;
+                //document.querySelector('.skillspace').style.setProperty('z-index', 4);
             }
             else {
                 animationValueTop = 0.0;
+                //document.querySelector('.skillspace').style.setProperty('z-index', 2);
             }
         }
         if (animationCounterBottom < timeLimit * timeFactor) animationValueBottom += dt;
         else {
-            if (animationOpenBottom) animationValueBottom = timeLimit * timeFactor;
+            if (animationOpenBottom) {
+                animationValueBottom = timeLimit * timeFactor;
+                document.querySelector('.skillspace').style.setProperty('z-index', 4);
+            }
             else animationValueBottom = 0.0;
+
         }
 
 
