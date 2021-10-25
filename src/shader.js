@@ -92,10 +92,17 @@ void main()
         gl_FragColor.rgb += vec3(0.5, 1.0, 0.0);
     }
 
-    if(animationValueTop == 0.0 && animationValueBottom == 0.0 && (abs(pixelPos.x) > 0.88 || abs(pixelPos.y) > 0.85)){
-        gl_FragColor.rgb += vec3(0.7 * abs(sin(time + pixelPos.x + pixelPos.y)));//vec3(abs(sin(length(pixelPos))));
-        gl_FragColor.a += 0.0;
+    if(animationValueTop == 0.0 && animationValueBottom == 0.0 && (abs(pixelPos.x) > 0.87 || abs(pixelPos.y) > 0.84)){
+        gl_FragColor.rgb += vec3(0.7 * abs(sin(time + pixelPos.x + pixelPos.y)));
+        float cvalue =  0.5 + (1.0 - abs(cos(time*2.0 + cos(pixelPos.x*8.0) + cos(pixelPos.y * 20.0))));
+        if(cvalue < 0.55){
+            gl_FragColor.rgb += vec3(1.0, 0.2, 0.0);
+        }
     }
+    else if(animationValueTop == 0.0 && animationValueBottom == 0.0 && (abs(pixelPos.x) > 0.86 || abs(pixelPos.y) > 0.82)){
+         gl_FragColor.rgb = vec3(0.0);
+    }
+    
 }
 
 `;

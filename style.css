@@ -201,7 +201,7 @@ html,body{
 }
 .skill:hover{
     box-shadow: 2px 2px rgb(155, 137, 155);
-}
+}   
 .skillicon{
     position: relative;
     width:30%;
