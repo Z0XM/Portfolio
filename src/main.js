@@ -84,6 +84,9 @@ function setup() {
             animationOpenTop = !animationOpenTop;
 
             //mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
+
+            if (!animationOpenTop)
+                document.querySelector('.projectspace').style.setProperty('z-index', 2);
         }
     });
 
@@ -128,12 +131,9 @@ function setup() {
         else {
             if (animationOpenTop) {
                 animationValueTop = timeLimit * timeFactor;
-                //document.querySelector('.skillspace').style.setProperty('z-index', 4);
+                document.querySelector('.projectspace').style.setProperty('z-index', 4);
             }
-            else {
-                animationValueTop = 0.0;
-                //document.querySelector('.skillspace').style.setProperty('z-index', 2);
-            }
+            else animationValueTop = 0.0;
         }
         if (animationCounterBottom < timeLimit * timeFactor) animationValueBottom += dt;
         else {
