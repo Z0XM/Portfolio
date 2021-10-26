@@ -4,7 +4,15 @@ var gl = canvas.getContext('webgl2');
 function setup() {
     gl.canvas.width = window.innerWidth;
     gl.canvas.height = window.innerHeight;
+
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
+
+
+    window.addEventListener('resize', function () {
+        gl.canvas.width = window.innerWidth;
+        gl.canvas.height = window.innerHeight;
+        gl.viewport(0, 0, window.innerWidth, window.innerHeight);
+    });
 
     var VSBack = createShader(gl.VERTEX_SHADER, VSBackStr);
     if (VSBack == -1) return;
