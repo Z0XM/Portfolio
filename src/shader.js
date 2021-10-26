@@ -44,10 +44,7 @@ void main()
     }
 
     if(mixValue > 0.93){
-        if(mainColor.r == 2.0 && mainColor.b == 4.0)
-            color += vec3(0.5,0.0,1.0);
-        else 
-            color += vec3(mainColor) / 2.5;
+        color += vec3(0.5,0.0,1.0);
     }
 
     if(mixValue < 0.9){
