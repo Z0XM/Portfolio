@@ -44,12 +44,6 @@ function setup() {
 
     var u_mainColor = gl.getUniformLocation(programBack, 'mainColor');
     var mainColor = [2.0, 0.0, 4.0];
-    var colorList = [
-        //[1.0, 0.0, 0.0],
-        //[0.0, 1.0, 0.0],
-        //[0.0, 0.0, 1.0],
-        [2.0, 0.0, 4.0],
-    ];
 
     var u_timeFactor = gl.getUniformLocation(programBack, 'timeFactor');
 
@@ -71,8 +65,6 @@ function setup() {
             animationCounterBottom = 0.0;
             animationOpenBottom = !animationOpenBottom;
 
-            //mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
-
             if (!animationOpenBottom)
                 document.querySelector('.skillspace').style.setProperty('z-index', 2);
         }
@@ -82,8 +74,6 @@ function setup() {
         if (animationValueTop == timeLimit * timeFactor || animationValueTop == 0.0) {
             animationCounterTop = 0.0;
             animationOpenTop = !animationOpenTop;
-
-            //mainColor = colorList[Math.floor(Math.random() * (colorList.length))];
 
             if (!animationOpenTop)
                 document.querySelector('.projectspace').style.setProperty('z-index', 2);
