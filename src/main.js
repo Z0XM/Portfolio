@@ -90,6 +90,25 @@ function setup() {
         }
     });
 
+    document.querySelector('.projectspace').addEventListener('mouseover', function () {
+        document.querySelector('.fade').style.setProperty('display', 'block');
+    });
+    document.querySelector('.projectspace').addEventListener('mouseout', function () {
+        document.querySelector('.fade').style.setProperty('display', 'none');
+    });
+
+    let cards = document.querySelectorAll('.projectinfo');
+    let projects = document.querySelectorAll('.project');
+    for (let cardi = 0; cardi < cards.length; cardi++) {
+        projects[cardi].addEventListener('mouseover', function () {
+            cards[cardi].style.setProperty('display', 'block');
+
+        });
+        projects[cardi].addEventListener('mouseout', function () {
+            cards[cardi].style.setProperty('display', 'none');
+        });
+    }
+
 
     var u_time = gl.getUniformLocation(programBack, 'time');
     var time = 0.0;
@@ -131,7 +150,7 @@ function setup() {
         else {
             if (animationOpenTop) {
                 animationValueTop = timeLimit * timeFactor;
-                document.querySelector('.projectspace').style.setProperty('z-index', 4);
+                document.querySelector('.projectspace').style.setProperty('z-index', 6);
             }
             else animationValueTop = 0.0;
         }
@@ -139,7 +158,7 @@ function setup() {
         else {
             if (animationOpenBottom) {
                 animationValueBottom = timeLimit * timeFactor;
-                document.querySelector('.skillspace').style.setProperty('z-index', 4);
+                document.querySelector('.skillspace').style.setProperty('z-index', 6);
             }
             else animationValueBottom = 0.0;
 

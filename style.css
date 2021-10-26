@@ -24,14 +24,23 @@ html,body{
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: black;
+    background-color:black;
     z-index:1;
+}
+
+.fade{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color:rgba(0, 0, 0, 0.5);
+    z-index:6;
 }
 
 .namearea{
     background-color:transparent;
     color:white;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: 'Zen Kurenaido', sans-serif;
     font-size: 60px;
     font-weight: bold;
 
@@ -40,13 +49,11 @@ html,body{
     width: 100%;
     height: 100%;
     z-index:2;
-
-    text-decoration: none;
 }
 
 .name{
     position: relative;
-    top:50%;
+    top:49.7%;
     left: 39%;
 }
 .namelink{
@@ -75,7 +82,6 @@ html,body{
     position: relative;
     width:10%;
     border-radius: 50%;
-    /* box-shadow: -1px -2px rgba(255, 255, 255, 0.7); */
 }
 
 .buttonarea{
@@ -97,10 +103,11 @@ html,body{
     left:60%;
 }
 .buttons{
-    background-color:transparent;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size:40px;
-    color:rgba(255, 255, 255, 0.8);
+    background-color:rgb(150, 50, 255, 1.0);
+    font-family: 'Zen Kurenaido', sans-serif;
+    font-size:30px;
+    color:white;
+    text-shadow: 2px 1px black;
     position:relative;
 
     display: flex;
@@ -108,11 +115,11 @@ html,body{
 
     height:50%;
     border-radius: 20%;
-    border-color:rgba(255, 255, 255, 0.5);
-    border-width: 4px;
+    border-color:white;
+    border-width: 3px;
 }
 .buttons:hover{
-    color:white;
+    color:rgba(255, 255, 255, 0.85);
     background-color:blueviolet;
     cursor: pointer;
 }
@@ -185,8 +192,9 @@ html,body{
 }
 
 .skill{
+    top:10%;
     margin: 1%;
-    width:10%;
+    width:11%;
     height:100%;
     position: relative;
     display: flex;
@@ -195,13 +203,13 @@ html,body{
     justify-content: center;
     
     border-radius: 10%;
-    background-color:rgb(255,255,255,0.2);
-    box-shadow:3px 3px thistle;
+    background-color:rgb(40, 0, 80);
+    box-shadow: 3px 3px rgb(200, 200, 200);
 
     text-decoration: none;
 }
 .skill:hover{
-    box-shadow: 2px 2px rgb(155, 137, 155);
+    box-shadow: 2px 2px rgb(150, 150, 150);
 }   
 .skillicon{
     position: relative;
@@ -209,8 +217,8 @@ html,body{
 }
 .skillname{
     position: relative;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color:orange;
+    font-family: 'Zen Kurenaido', sans-serif;
+    color: white;
     width:60%;
     font-size: 180%;
     text-shadow: 3px 3px black;  
@@ -268,24 +276,51 @@ html,body{
     width:8%;
     height:100%;
     position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     
     border-radius: 10%;
-    background-color:rgb(255,255,255,0.2);
-    box-shadow:3px 3px thistle;
+    background-color:rgb(40, 0, 80);
+    box-shadow: 3px 3px rgb(200, 200, 200);
+    
+    text-align: center;
 
-    position: relative;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color:orange;
-    font-size: 180%;
-    text-shadow: 3px 3px black; 
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
     text-decoration: none;
 }
+
+.projectname{
+    width:80%;
+    height: 100%;
+    position: relative;
+    font-family: 'Zen Kurenaido', sans-serif;
+    color:white;
+    font-size: 150%;
+    
+    top:20%;
+}
+
+.projectinfo{
+    display: none;
+    background-color:rgba(0, 0, 0, 0.5);
+    position: relative;
+    width:17vw;
+    z-index: 4;
+    font-family: 'Zen Kurenaido', sans-serif;
+    color:white;
+    font-size: 130%;
+    margin-top: 50px;
+    border-radius: 5%;
+    border-color: black;
+    border-width: 5px;
+    box-shadow: 2px 2px rgb(150, 150, 150);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .project:hover{
-    box-shadow: 2px 2px rgb(155, 137, 155);
+    box-shadow: 2px 2px rgb(150, 150, 150);
 }
 #bignumberproject{
     width:12%;

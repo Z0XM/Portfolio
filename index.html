@@ -5,10 +5,14 @@
     <title> Mukul Singh </title>
     <meta charset='UTF-8'>
     <script src="https://kit.fontawesome.com/a75f99c89f.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kurenaido&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='./style.css'>
 </head>
 
 <body onload="setup();">
+    <div class='fade'></div>
     <div class='bg'></div>
     <canvas id='canvas'></canvas>
     <div class="namearea">
@@ -20,12 +24,12 @@
     </div>
     <div class='buttonarea' id='leftbuttons'>
         <button id='skills' class='buttons'>
-            <p>Skills</p>
+            <p>SKILLS</p>
         </button>
     </div>
     <div class='buttonarea' id='rightbuttons'>
         <button id='projects' class='buttons'>
-            <p>Projects</p>
+            <p>PROJECTS</p>
         </button>
     </div>
     <div class='socialspace'>
@@ -35,14 +39,14 @@
                     <i id='github' class="fab fa-github"></i>
                 </div>
             </a>
-            <a class='iconspace' href='https://www.instagram.com/mukul.z' target='_blank' class='sociallink'>
-                <div class='icon'>
-                    <i id='instagram' class="fab fa-instagram"></i>
-                </div>
-            </a>
             <a class='iconspace' href='https://www.linkedin.com/in/mukulz/' target='_blank' class='sociallink'>
                 <div class='icon'>
                     <i id='linkedin' class="fab fa-linkedin"></i>
+                </div>
+            </a>
+            <a class='iconspace' href='https://www.instagram.com/mukul.z' target='_blank' class='sociallink'>
+                <div class='icon'>
+                    <i id='instagram' class="fab fa-instagram"></i>
                 </div>
             </a>
         </div>
@@ -72,17 +76,77 @@
         </a>
     </div>
     <div class='projectspace'>
-        <a class='project' href='https://github.com/Z0XM/ZUI-v4' target="_blank">ZUI-v4</a>
-        <a class='project' href='https://github.com/Z0XM/Cube3D' target="_blank">Cube3D</a>
-        <a class='project' id='bignumberproject' href='https://github.com/Z0XM/Big-Number' target="_blank">BigNumber</a>
+        <a class='project' href='https://github.com/Z0XM/ZUI-v4' target="_blank">
+            <div class='projectname'>
+                ZUI-v4
+            </div>
+            <div class='projectinfo'>
+                <p>
+                    A Custom GUI Library<br>
+                    C++ | SFML <br>
+                    Features: Buttons, TextBoxes, InputBoxes, Sliders, DropDowns, Pages, ScrollBars, Static and
+                    Dynamic Allocation
+                </p>
+            </div>
+        </a>
+        <a class='project' href='https://github.com/Z0XM/Cube3D' target="_blank">
+            <div class='projectname'>Cube3D</div>
+            <div class='projectinfo'>
+                <p>
+                    A 3D Rubik's Cube Solver<br>
+                    C++ | SFML <br>
+                    Features: F2L Implementation, Colorable Cube, Average Moves - [50,70]
+                </p>
+            </div>
+        </a>
+        <a class='project' id='bignumberproject' href='https://github.com/Z0XM/Big-Number' target="_blank">
+            <div class='projectname'>BigNumber</div>
+            <div class='projectinfo'>
+                <p>
+                    A Library for handling very large numbers<br>
+                    C++<br>
+                    Features: Fractional & Integral Numbers, Addition, Subtraction, Multiplication, Faster than many big
+                    number libraries,
+                    Equation Resolver
+                </p>
+            </div>
+        </a>
         <a class='project' id='tictactoeproject' href='https://github.com/Z0XM/TicTacToe-AI' target="_blank">
-            TicTacToe AI
+            <div class='projectname'>
+                TicTacToe AI
+            </div>
+            <div class='projectinfo'>
+                <p>
+                    A Console TicTacToe Game with AI<br>
+                    C++<br>
+                    AI plays any of the winning/drawable moves AI never loses
+                </p>
+            </div>
         </a>
         <a class='project' id='algoproject' href='https://github.com/Z0XM/Algorithm-Visualiser-2.2' target='_blank'>
-            Algorithm Visualizer
+            <div class='projectname'>
+                Algorithm Visualizer
+            </div>
+            <div class='projectinfo'>
+                <p>
+                    Visualizes Sorting Algorithms<br>
+                    C++ | SFML<br>
+                    Algorithms: Bubble sort, Selection sort, Insertion sort, Quick Sort(LL LR), Merge Sort(2 ways), Heap
+                    sort
+                </p>
+            </div>
         </a>
         <a class='project' id='visualproject' href='https://github.com/Z0XM/Visual-Treat' target='_blank'>
-            Visual Treat
+            <div class='projectname'>
+                Visual Treat
+            </div>
+            <div class='projectinfo'>
+                <p>
+                    Visualizes Many Graphical Patterns<br>
+                    C++ | SFML <br>
+                    Controllable from Keyboard. Audio enabled
+                </p>
+            </div>
         </a>
     </div>
 
